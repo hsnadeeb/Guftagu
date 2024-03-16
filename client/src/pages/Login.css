@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: aquamarine;
+    background-color: rgb(216, 245, 235);
   }
   
   .form-container {
@@ -13,6 +13,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 40px;
+    
   }
   
   .form-container h2 {
@@ -36,6 +37,8 @@
     margin-bottom: 20px;
     border: 1px solid #ced4da;
     border-radius: 4px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .form-container button {
@@ -45,10 +48,12 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .form-container button:hover {
     background-color: #0056b3;
+    
   }
   
   .form-container p {
@@ -60,6 +65,12 @@
   
   .form-container p:hover {
     text-decoration: underline;
+  }
+
+  .error-message{
+    padding: 0;
+    color: red;
+    font-size: small;
   }
   
   @media (max-width: 768px) {
