@@ -1,0 +1,9 @@
+npm install @mui/material @emotion/react @emotion/styled
+
+npm i react-router-dom moment 6pp
+
+npm install --save chart.js react-chartjs-2
+
+npm i react-hot-toast react-helmet-async
+
+npm install @mui/icons-material
