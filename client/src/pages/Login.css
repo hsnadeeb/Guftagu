@@ -72,6 +72,14 @@
     color: red;
     font-size: small;
   }
+
+  .avatar-image {
+    width: 100px; /* Adjust the width of the avatar as needed */
+    height: 100px; /* Adjust the height of the avatar as needed */
+    border-radius: 50%; /* Make the avatar circular */
+    margin-bottom: 20px; /* Add margin bottom to separate it from other elements */
+  }
+  
   
   @media (max-width: 768px) {
     .form-container {
