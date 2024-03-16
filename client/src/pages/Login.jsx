@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
-import maleAvatar from "../assets/male_avatar.png"; // Import default avatar images
+import maleAvatar from "../assets/male_avatar.png";
 import femaleAvatar from "../assets/female_avatar.png";
 
 function Login() {
@@ -21,26 +21,22 @@ function Login() {
   };
 
   const validateEmail = (email) => {
-    // Basic email validation using regular expression
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
   const validatePassword = (password) => {
-    // Strong password validation with at least 8 characters, including uppercase, lowercase, numbers, and special characters
     const re =
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return re.test(password);
   };
 
   const validateUsername = (username) => {
-    // Username validation with only alphanumeric characters and underscores
     const re = /^[a-zA-Z0-9_]+$/;
     return re.test(username);
   };
 
   const validateConfirmPassword = (confirmPassword) => {
-    // Match password and confirmPassword
     return formData.password === confirmPassword;
   };
 
@@ -77,12 +73,30 @@ function Login() {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Clearing errors on input change
+    setErrors({ ...errors, [name]: "" });
   };
+
+  //   const handleFileChange = (event) => {
+  //     const file = event.target.files[0];
+  //     setFormData({ ...formData, profilePicture: file });
+  //   };
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setFormData({ ...formData, profilePicture: file });
+
+    // Create a URL for the selected file
+    const imageUrl = URL.createObjectURL(file);
+
+    // Update the formData state to include the profile picture
+    setFormData({ ...formData, profilePicture: file, imageUrl: imageUrl });
+  };
+
+  const handleLogin = () => {
+    console.log("handlelogin");
+  };
+
+  const handleSignup = () => {
+    console.log("handlesignup");
   };
 
   return (
@@ -124,98 +138,120 @@ function Login() {
               </div>
             </div>
           ) : (
-            <div>
-              <div className="profile-picture">
-                <img
-                  src={formData.gender === "female" ? femaleAvatar : maleAvatar}
-                  alt="Avatar"
-                  className="avatar-image"
-                />
+            <div className="innercontainer">
+              <div className="left-section">
+                <div className="avatar">
+                  <div className="profile-picture">
+                    <img
+                      src={
+                        formData.imageUrl ||
+                        (formData.gender === "female"
+                          ? femaleAvatar
+                          : maleAvatar)
+                      }
+                      alt="Avatar"
+                      className="avatar-image"
+                    />
+                  </div>
+                  <div className="signUpPage">
+                    <label htmlFor="gender">Gender:</label>
+                    <br />
+                    <select
+                      id="gender"
+                      name="gender"
+                      className="form-input"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="profilePicture">Profile Picture:</label>
+                  <input
+                    type="file"
+                    id="profilePicture"
+                    name="profilePicture"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    className="form-input"
+                  />
+                </div>
               </div>
-              {/* <div>
-                <label htmlFor="profilePicture">Profile Picture:</label>
-                <input type="file" id="profilePicture" name="profilePicture" onChange={handleFileChange} accept="image/*" className="form-input" />
-              </div> */}
-              <div>
-                <label htmlFor="signupUserName">Username:</label>
-                <input
-                  type="text"
-                  id="signupUserName"
-                  name="userName"
-                  className="form-input"
-                  value={formData.userName}
-                  onChange={handleChange}
-                  required
-                />
-                {errors.userName && (
-                  <span className="error-message">{errors.userName}</span>
-                )}
-              </div>
-              <div>
-                <label htmlFor="signupEmail">Email:</label>
-                <input
-                  type="email"
-                  id="signupEmail"
-                  name="email"
-                  className="form-input"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-                {errors.email && (
-                  <span className="error-message">{errors.email}</span>
-                )}
-              </div>
-              <div>
-                <label htmlFor="gender">Gender:</label>
-                <br />
-                <select
-                  id="gender"
-                  name="gender"
-                  className="form-input"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="signupPassword">Password:</label>
-                <input
-                  type="password"
-                  id="signupPassword"
-                  name="password"
-                  className="form-input"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                {errors.password && (
-                  <span className="error-message">{errors.password}</span>
-                )}
-              </div>
-              <div>
-                <label htmlFor="signupPasswordCheck">Confirm Password:</label>
-                <input
-                  type="password"
-                  id="signupPasswordCheck"
-                  name="confirmPassword"
-                  className="form-input"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                />
-                {errors.confirmPassword && (
-                  <span className="error-message">
-                    {errors.confirmPassword}
-                  </span>
-                )}
+              <div className="right-section">
+                <div>
+                  <label htmlFor="signupUserName">Username:</label>
+                  <input
+                    type="text"
+                    id="signupUserName"
+                    name="userName"
+                    className="form-input"
+                    value={formData.userName}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.userName && (
+                    <span className="error-message">{errors.userName}</span>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="signupEmail">Email:</label>
+                  <input
+                    type="email"
+                    id="signupEmail"
+                    name="email"
+                    className="form-input"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.email && (
+                    <span className="error-message">{errors.email}</span>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="signupPassword">Password:</label>
+                  <input
+                    type="password"
+                    id="signupPassword"
+                    name="password"
+                    className="form-input"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.password && (
+                    <span className="error-message">{errors.password}</span>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="signupPasswordCheck">Confirm Password:</label>
+                  <input
+                    type="password"
+                    id="signupPasswordCheck"
+                    name="confirmPassword"
+                    className="form-input"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.confirmPassword && (
+                    <span className="error-message">
+                      {errors.confirmPassword}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           )}
-          <button type="submit" className="form-button">
+          <button
+            type="submit"
+            className="form-button"
+            onClick={isLogin ? handleLogin : handleSignup}
+          >
             {isLogin ? "Login" : "Sign Up"}
           </button>
         </form>
